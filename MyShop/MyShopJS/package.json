@@ -1,0 +1,13 @@
+{
+  "name": "my-shop-js",
+  "version": "0.0.0",
+  "description": "MyShopJS",
+  "main": "server.js",
+  "author": {
+    "name": "BS-18"
+  },
+  "dependencies": {
+    "multiparty": "^4.1.4",
+    "shortid": "^2.2.8"
+  }
+}
