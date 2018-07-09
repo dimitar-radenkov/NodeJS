@@ -99,8 +99,7 @@ module.exports = (req, res) => {
                 res.writeHead(302, { Location: "/" });
                 res.end();
             });
-        });
-
+        
         // Parse req
         form.parse(req);
     }
