@@ -3,9 +3,10 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="utf-8" />
+    <meta name="viewport" content="width=devide-width, initial-scale=1.0" />
     <title>ShopStop</title>
     <link rel="shortcut icon" type="image/x-icon" href="../../content/images/favicon.ico" />
-    <link rel="stylesheet" href="../../content/styles/site.css"  />
+    <link rel="stylesheet" href="../../content/styles/site.css" />
 </head>
 <body>
     <header>
@@ -18,16 +19,18 @@
         </nav>
     </header>
     <main>
-        <h1 class="head-title">Welcome to ShopStop</h1>
+        <form id="add-category-form" class="center-form", method="post">
+            <h2>Add Category</h2>
+            <div>
+                <label for="name">Name</label>
+                <input id="name" name="name" type="text" class="input-field"/>
+            </div>
 
-        <form>
-            <input type="text" name="query" placeholder="Search..." />
-            <input type="submit" value="Search" />
+            <div class="form-group">
+                <input id="add-category-btn" type="submit" value="Add" class="btn"/>
+            </div>
+
         </form>
-
-        <div class="cards">
-            {{{content}}}
-        </div>
     </main>
     <footer>
         <p>&copy; ShopStop</p>

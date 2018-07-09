@@ -1,18 +1,13 @@
 ﻿const url = require("url");
-const http = require("http");
-const database = require("../config/database");
 const fs = require("fs");
 const path = require("path");
 const qs = require("querystring");
 const multipart = require("multiparty");
 const shortid = require("shortid");
 
+const Product = require("../models/Product");
+const Category = require("../models/Category");
 
-/**
- * /
- * @param {http.ClientRequest} req
- * @param {http.ClientResponse} res
- */
 module.exports = (req, res) => {
     req.pathname = req.pathname || url.parse(req.url).pathname;
     if (req.pathname === "/product/add" && req.method === "GET") {
@@ -29,9 +24,21 @@ module.exports = (req, res) => {
                 return;
             }
 
-            res.writeHead(200, { "Content-Type": "text/html" });
-            res.write(data);
-            res.end();
+            Category
+                .find()
+                .then((categories) => {
+
+                    let replacement = `<select class="input-field" name="category">`;
+                    for (var c of categories) {
+                        replacement += `<option value="${c._id}">${c.name}</option>`
+                    }
+                    replacement += "</select>";
+
+                    let html = data.toString().replace("{categories}", replacement);
+                    res.writeHead(200, { "Content-Type": "text/html" });
+                    res.write(html);
+                    res.end();
+                });
         });
     }
     else if (req.pathname === "/product/add" && req.method === "POST") {
@@ -82,9 +89,16 @@ module.exports = (req, res) => {
         });
 
         form.on("close", () => {
-            database.products.add(product);
-            res.writeHead(302, { Location: "/" });
-            res.end();
+            Product.create(product)
+                .then((insertedProduct) => {
+                    Category.findById(product.category)
+                        .then(category => {
+                            category.products.push(insertedProduct._id);
+                            category.save();
+                        }));
+                res.writeHead(302, { Location: "/" });
+                res.end();
+            });
         });
 
         // Parse req
