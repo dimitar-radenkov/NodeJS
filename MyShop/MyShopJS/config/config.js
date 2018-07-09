@@ -1,11 +1,9 @@
-﻿"use strict";
-
-const path = require("path");
+﻿const path = require("path");
 
 module.exports = {
-    development: {
-        //rootPath = path.normalize(path.join(__dirname, "../"))
-        connectionString: "mongodb://localhost:27017/ShopStopDatabase"
+    development: {        
+        connectionString: "mongodb://localhost:27017/ShopStopDatabase",
+        rootPath: path.normalize(path.join(__dirname, "../")),
     },
     production: {
 
